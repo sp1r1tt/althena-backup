@@ -1,0 +1,31 @@
+-- Включаем RLS для всех таблиц
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE psychological_tests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE test_results ENABLE ROW LEVEL SECURITY;
+ALTER TABLE therapists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE booking_sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE service_packages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE email_notifications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
+
+-- Базовые политики для пользователей (могут видеть только свои данные)
+CREATE POLICY "Users can view own profile" ON users FOR SELECT USING (auth.uid() = id);
+CREATE POLICY "Users can update own profile" ON users FOR UPDATE USING (auth.uid() = id);
+
+-- Публичный доступ к тестам и терапевтам (только чтение)
+CREATE POLICY "Anyone can view tests" ON psychological_tests FOR SELECT USING (true);
+CREATE POLICY "Anyone can view therapists" ON therapists FOR SELECT USING (true);
+CREATE POLICY "Anyone can view packages" ON service_packages FOR SELECT USING (true);
+
+-- Пользователи могут видеть только свои результаты и бронирования
+CREATE POLICY "Users can view own test results" ON test_results FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can create test results" ON test_results FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can view own bookings" ON booking_sessions FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can create bookings" ON booking_sessions FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Временно разрешаем всем создавать записи для тестирования
+CREATE POLICY "Allow inserts for testing" ON users FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow analytics inserts" ON analytics_events FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow email inserts" ON email_notifications FOR INSERT WITH CHECK (true);

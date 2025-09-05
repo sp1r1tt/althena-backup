@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f2f1f0;
+  --foreground: #1a1a1a; /* Темный цвет для основного текста */
+  --foreground-alt: #ffffff; /* Белый для темных фонов */
+  --foreground-special: #4a6875; /* Специальный цвет для акцентов */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #081a2e;
+    --foreground: #ffffff; /* Σε dark mode, τα κείμενα και οι τίτλοι θα είναι λευκά */
+    --foreground-alt: #143B64;
+    --foreground-special: #4a6875;
+  }
+}
+
+html, body {
+  color: #1a1a1a; /* Черный цвет текста по умолчанию */
+  background: var(--background);
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Убираем слишком общее правило для цвета */
+* {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Заголовки имеют темный цвет */
+h1, h2, h3, h4, h5, h6 {
+  color: #1a1a1a;
+}
+
+/* Основной текст - исключаем карточки с HeroSlider */
+p, span, div:not(.hero-slider-content *) {
+  color: #1a1a1a;
+}
+
+/* Формы и инпуты */
+input, textarea, select {
+  color: #1a1a1a;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666;
+}
+
+/* Ειδικές περιπτώσεις για το #4a6875 */
+.special-text {
+  color: var(--foreground-special);
+}
+
+/* Цвета для конкретных фонов */
+[style*="background-color: #f2f1f0"],
+[style*="background-color: rgba(237, 191, 171, 0.2)"],
+[style*="background-color: rgba(255, 255, 255, 0.5)"],
+[style*="background-color: rgba(255, 255, 255, 0.7)"] {
+  color: #1a1a1a !important; /* Темный текст на светлых фонах */
+}
+
+[style*="background-color: #081a2e"],
+[style*="background-color: #143B64"],
+[style*="background-color: rgba(142, 181, 186, 1)"],
+[style*="background-color: rgba(91, 125, 140, 1)"],
+[style*="background-color: rgba(20, 59, 100, 1)"] {
+  color: #ffffff !important; /* Белый текст на темных фонах */
+}
+
+/* Убеждаемся, что Tailwind классы имеют приоритет */
+.text-gray-900 { color: #1a1a1a !important; }
+.text-gray-800 { color: #262626 !important; }
+.text-gray-700 { color: #404040 !important; }
+.text-gray-600 { color: #525252 !important; }
+.text-gray-500 { color: #737373 !important; }
+.text-gray-400 { color: #a3a3a3 !important; }
+.text-gray-300 { color: #d4d4d4 !important; }
+.text-gray-200 { color: #e5e5e5 !important; }
+.text-gray-100 { color: #f5f5f5 !important; }
+.text-white { color: #ffffff !important; }
+.text-black { color: #000000 !important; }
+
+/* Специальные правила для контента HeroSlider карточек */
+.hero-slider-content {
+  color: #ffffff !important;
+}
+
+.hero-slider-content p,
+.hero-slider-content span,
+.hero-slider-content h1,
+.hero-slider-content h2,
+.hero-slider-content h3,
+.hero-slider-content h4,
+.hero-slider-content h5,
+.hero-slider-content h6 {
+  color: #ffffff !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

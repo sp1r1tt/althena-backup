@@ -1,0 +1,49 @@
+-- Удалить все таблицы в правильном порядке (сначала дочерние)
+DROP TABLE IF EXISTS analytics_events CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS email_queue CASCADE;
+DROP TABLE IF EXISTS email_notifications CASCADE;
+DROP TABLE IF EXISTS test_results CASCADE;
+DROP TABLE IF EXISTS booking_sessions CASCADE;
+DROP TABLE IF EXISTS user_subscriptions CASCADE;
+DROP TABLE IF EXISTS packages CASCADE;
+DROP TABLE IF EXISTS service_packages CASCADE;
+DROP TABLE IF EXISTS therapists CASCADE;
+DROP TABLE IF EXISTS psychological_tests CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+-- Проверить, что все таблицы удалены
+SELECT tablename FROM pg_tables WHERE schemaname = 'public';
+
+
+
+Шаг 2: Отключить RLS для всех таблиц (если они существуют)
+-- Отключить RLS для всех таблиц
+ALTER TABLE IF EXISTS users DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS psychological_tests DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS test_results DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS therapists DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS booking_sessions DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS service_packages DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS user_subscriptions DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS email_notifications DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS analytics_events DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS comments DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS packages DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS email_queue DISABLE ROW LEVEL SECURITY;
+
+
+🔧 КАК НАЗНАЧИТЬ РОЛИ ПОЛЬЗОВАТЕЛЯМ:
+Через админ-панель:
+// app/api/admin/update-role/route.ts
+// Позволяет менять роли пользователей
+
+typescript
+
+
+Через SQL (временно):
+-- Сделать пользователя терапевтом
+UPDATE users SET role = 'therapist' WHERE email = 'therapist@example.com';
+
+-- Сделать пользователя админом  
+UPDATE users SET role = 'admin' WHERE email = 'admin@example.com';
